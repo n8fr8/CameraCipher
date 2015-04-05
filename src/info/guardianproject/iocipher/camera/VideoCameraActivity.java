@@ -511,7 +511,7 @@ public class VideoCameraActivity extends CameraBaseActivity {
 						e.printStackTrace();
 					}
 				 }
-				 else
+				 else if (audioRecord.getRecordingState() == AudioRecord.STATE_INITIALIZED)
 				 {
 				   audioRecord.startRecording();
 				   
@@ -530,6 +530,8 @@ public class VideoCameraActivity extends CameraBaseActivity {
 				   }
 				   
 				   audioRecord.stop();
+                   audioRecord.release();
+
 				   try {
 					   outputStreamAudio.flush();
 					outputStreamAudio.close();
@@ -537,7 +539,9 @@ public class VideoCameraActivity extends CameraBaseActivity {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				 }
+				 } else {
+                     Log.d(TAG, "Failed to initialize AudioRecorder. Likely a device specific bug");
+                 }
 				 
 				 
 			 }
