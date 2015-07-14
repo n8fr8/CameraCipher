@@ -145,18 +145,16 @@ public class GalleryActivity extends Activity  implements ICacheWordSubscriber {
 		setIntent(null);
 		
 	}
-	
-	 
-	  @Override
-	   public void onConfigurationChanged(Configuration newConfig) {
-		  
-		  	
-	        super.onConfigurationChanged(newConfig);
 
-	   }
-	 
-	
-	protected void onResume() {
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+
+
+        super.onConfigurationChanged(newConfig);
+
+    }
+
+    protected void onResume() {
 		super.onResume();
 		
 		if (!StorageManager.isStorageMounted())
