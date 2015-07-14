@@ -92,7 +92,8 @@ public class VideoCameraActivity extends CameraBaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		
 		getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
+		mIsVideo = true;
+		
 		super.onCreate(savedInstanceState);
 
 		mFileBasePath = getIntent().getStringExtra("basepath");

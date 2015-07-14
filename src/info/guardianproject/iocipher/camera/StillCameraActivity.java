@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Camera;
+import android.hardware.Camera.AutoFocusCallback;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
@@ -33,6 +34,7 @@ public class StillCameraActivity extends CameraBaseActivity {
 	
 	private boolean isRequest = false;
 	private ArrayList<String> mResultList = null;
+	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -90,12 +92,23 @@ public class StillCameraActivity extends CameraBaseActivity {
 		}
 
 	}
+	
+	
 
 	@Override
 	public void onPause() {
 
 		super.onPause();
 
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+   	 	
+		 
+		
 	}
 	
 	

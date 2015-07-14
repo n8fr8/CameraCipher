@@ -72,6 +72,8 @@ public abstract class CameraBaseActivity extends Activity implements OnClickList
 	private int mPreviewWidth = -1;
 	private int mPreviewHeight = -1;
 	
+	boolean mIsVideo = false;
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -228,13 +230,20 @@ public abstract class CameraBaseActivity extends Activity implements OnClickList
 				 
 				 if (this.getCameraDirection() == CameraInfo.CAMERA_FACING_BACK)
 				 {
-					 if (getPackageManager().hasSystemFeature(
-					            PackageManager.FEATURE_CAMERA_AUTOFOCUS))
-					        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-					            params.setFocusMode(Parameters.FOCUS_MODE_AUTO);
-					        } 
 					 
-					 
+					 if (mIsVideo && params.getSupportedFocusModes().contains(
+							    Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+							  params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+							}
+					 else if (params.getSupportedFocusModes().contains(
+							    Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
+							  params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+							}
+					 else if  (params.getSupportedFocusModes().contains(
+							    Camera.Parameters.FOCUS_MODE_AUTO)) {
+							  params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+							}
+					
 					 if (mRotation > 0)
 						 params.setRotation(mRotation);
 
@@ -294,12 +303,14 @@ public abstract class CameraBaseActivity extends Activity implements OnClickList
 	{
 		try
 	    {    
-	        // release the camera immediately on pause event   
-			camera.stopPreview(); 
-			camera.setPreviewCallback(null);
-			camera.release();
-			camera = null;
-
+			if (camera != null)
+			{
+		        // release the camera immediately on pause event   
+				camera.stopPreview(); 
+				camera.setPreviewCallback(null);
+				camera.release();
+				camera = null;
+			}
 	    }
 	    catch(Exception e)
 	    {

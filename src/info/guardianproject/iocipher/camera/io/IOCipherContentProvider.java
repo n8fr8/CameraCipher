@@ -159,7 +159,7 @@ public class IOCipherContentProvider extends ContentProvider {
 				out.close();
 				
 			} catch (IOException e) {
-				Log.e(TAG, "File transfer failed:", e);
+				Log.w(TAG, "File transfer exception", e);
 			}
 		}
 	}
