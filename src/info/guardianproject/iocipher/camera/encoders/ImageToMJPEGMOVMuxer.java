@@ -70,7 +70,8 @@ public class ImageToMJPEGMOVMuxer {
     }
 
     public void addFrame(int width, int height, ByteBuffer buff, long timeScaleFPS, long duration) throws IOException {
-        if (size == null) {
+
+    	if (size == null) {
             size = new Size(width,height);            
             videoTrack.addSampleEntry(MP4Muxer.videoSampleEntry(imageType, size, ENCODER_NAME));
            

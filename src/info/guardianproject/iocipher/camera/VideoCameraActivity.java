@@ -379,29 +379,30 @@ public class VideoCameraActivity extends CameraBaseActivity {
 		}
 		
 		if (mIsRecording && mFrameQ != null)
-			synchronized (mFrameQ)
+			if (data != null)
 			{
-				if (data != null)
-				{
-					
-					VideoFrame vf = new VideoFrame();
-					vf.image = dataResult;
-					vf.duration = 1;//this is frame duration, not time //System.currentTimeMillis() - lastTime;
-					vf.fps = mFPS;
-					
-					mFrameQ.add(vf);
-					
-					mFramesTotal++;					
-					
-				}
+				
+				VideoFrame vf = new VideoFrame();
+				vf.image = dataResult;
+				vf.duration = 1;//this is frame duration, not time //System.currentTimeMillis() - lastTime;
+				vf.fps = mFPS;
+				
+				mFrameQ.add(vf);
+				
+				mFramesTotal++;					
+				
 			}
 			
-		mFpsCounter++;
-        if((System.currentTimeMillis() - start) >= 1000) {
-        	mFPS = mFpsCounter;
-        	mFpsCounter = 0; 
-            start = System.currentTimeMillis();
-        }
+			
+		if (!mIsRecording) //calculate frame-rate while not recording
+		{
+			mFpsCounter++;
+	        if((System.currentTimeMillis() - start) >= 1000) {
+	        	mFPS = mFpsCounter;
+	        	mFpsCounter = 0; 
+	            start = System.currentTimeMillis();
+	        }
+		}
 		
 	}
 	
@@ -443,13 +444,10 @@ public class VideoCameraActivity extends CameraBaseActivity {
 	private class Encoder extends Thread {
 		private static final String TAG = "ENCODER";
 
-		private File fileOut;
 		private FileOutputStream fos;
 		
 		public Encoder (File fileOut, int baseFramesPerSecond, boolean withEmbeddedAudio) throws IOException
 		{
-			this.fileOut = fileOut;
-
 			fos = new info.guardianproject.iocipher.FileOutputStream(fileOut);
 			SeekableByteChannel sbc = new IOCipherFileChannelWrapper(fos.getChannel());
 

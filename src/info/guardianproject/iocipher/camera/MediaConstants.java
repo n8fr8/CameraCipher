@@ -17,7 +17,7 @@ import android.media.AudioFormat;
 
 public class MediaConstants {
 
-	public static int sJpegQuality = 50; //70 is the quality!
+	public static int sJpegQuality = 90; //70 is the quality!
 	public static int sPreviewWidth = 720; //defualt width
 	public static int sPreviewHeight = 480; //default height "480p"
 	
